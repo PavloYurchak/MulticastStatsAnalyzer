@@ -27,8 +27,7 @@ namespace Server.Service
 
             if(_id == long.MaxValue)
                 _id = 1;
-            Console.Clear();
-            Console.Write(_id);
+
             var quote = new QuoteMessage
             {
                 Id = _id++,

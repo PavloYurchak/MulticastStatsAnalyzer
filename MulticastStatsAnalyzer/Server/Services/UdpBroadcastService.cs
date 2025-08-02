@@ -10,9 +10,8 @@ namespace Server.Service
 {
     internal class UdpBroadcastService(ILogger<UdpBroadcastService> logger,
         ServerConfig serverConfig) 
-        : AbstractBackgroundService<UdpBroadcastService>(logger, nameof(UdpBroadcastService), repeat: true)
+        : AbstractBackgroundService<UdpBroadcastService>(logger, nameof(UdpBroadcastService), repeat: false)
     {
-        private readonly ServerConfig _serverConfig = serverConfig;
         private readonly Random _random = new();
         private long _id = 1;
         protected override async Task DoWorkAsync(CancellationToken stoppingToken)
@@ -21,8 +20,8 @@ namespace Server.Service
             var multicastEndpoint = new IPEndPoint(IPAddress.Parse(serverConfig.MulticastAddress), serverConfig.Port);
 
             double value = Math.Round(
-                _random.NextDouble() * (_serverConfig.MaxValue - _serverConfig.MinValue) + _serverConfig.MinValue,
-                _serverConfig.Decimals
+                _random.NextDouble() * (serverConfig.MaxValue - serverConfig.MinValue) + serverConfig.MinValue,
+                serverConfig.Decimals
                 );
 
             if(_id == long.MaxValue)

@@ -25,7 +25,7 @@ namespace Client.Services
             udpClient.Client.ReceiveBufferSize = clientConfig.BufferSize;
             udpClient.Client.ReceiveTimeout = clientConfig.ReceiveTimeoutMs;
 
-            logger.LogInformation("Listening for multicast messages on {Address}:{Port}", clientConfig.MulticastAddress, clientConfig.Port);
+            LogInformation("Listening for multicast messages on {Address}:{Port}");
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -41,17 +41,17 @@ namespace Client.Services
                     }
                     else
                     {
-                        logger.LogWarning("❗ Failed to deserialize message: {Json}", json);
+                        LogWarning($"Failed to deserialize message: {json}");
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    logger.LogInformation("Multicast receive cancelled.");
+                    LogInformation("Multicast receive cancelled.");
                     break;
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Error receiving UDP multicast message.");
+                    LogError(ex, "Error receiving UDP multicast message.");
                 }
             }
         }

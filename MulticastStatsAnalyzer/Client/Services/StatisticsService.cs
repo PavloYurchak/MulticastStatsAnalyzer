@@ -41,7 +41,7 @@ namespace Client.Services
             {
                 if(_values.Count == 0)
                 {
-                    logger.LogInformation("No values received yet.");
+                    LogInformation("No values received yet.");
                     return;
                 }
 

@@ -33,5 +33,18 @@ namespace Shared.Infrastructure
             while (repeat && !stoppingToken.IsCancellationRequested);
             logger.LogInformation($"{serviceName} has stopped.");
         }
+
+        protected virtual void LogInformation(string message)
+        {
+            logger.LogInformation(message);
+        }
+        protected virtual void LogError(Exception ex, string message)
+        {
+            logger.LogError(ex, message);
+        }
+        protected virtual void LogWarning(string message)
+        {
+            logger.LogWarning(message);
+        }
     }
 }

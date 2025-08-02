@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ServerConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

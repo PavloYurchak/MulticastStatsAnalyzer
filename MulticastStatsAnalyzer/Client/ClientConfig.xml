@@ -1,0 +1,6 @@
+﻿<ClientConfig>
+	<MulticastAddress>239.0.0.222</MulticastAddress>
+	<Port>5000</Port>
+	<BufferSize>4096</BufferSize>
+	<ReceiveTimeoutMs>1000</ReceiveTimeoutMs>
+</ClientConfig>

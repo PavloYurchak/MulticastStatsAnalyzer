@@ -1,4 +1,4 @@
-﻿namespace Server.Model
+﻿namespace Shared.Models
 {
     public record QuoteMessage
     {

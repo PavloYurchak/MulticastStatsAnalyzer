@@ -10,7 +10,7 @@ namespace Server.Service
 {
     internal class UdpBroadcastService(ILogger<UdpBroadcastService> logger,
         ServerConfig serverConfig) 
-        : AbstractBackgroundService<UdpBroadcastService>(logger, nameof(UdpBroadcastService), repeat: false)
+        : AbstractBackgroundService<UdpBroadcastService>(logger, nameof(UdpBroadcastService), repeat: true)
     {
         private readonly Random _random = new();
         private long _id = 1;

@@ -69,8 +69,6 @@ namespace Client.Services
                             - Median: {median:F2}
                             - Mode: {mode:F2}
                             """);
-
-
             }
         }
     }

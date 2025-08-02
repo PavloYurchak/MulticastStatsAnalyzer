@@ -1,0 +1,7 @@
+﻿<ServerConfig>
+	<MulticastAddress>239.0.0.222</MulticastAddress>
+	<Port>5000</Port>
+	<MinValue>10.0</MinValue>
+	<MaxValue>100.0</MaxValue>
+	<Decimals>2</Decimals>
+</ServerConfig>

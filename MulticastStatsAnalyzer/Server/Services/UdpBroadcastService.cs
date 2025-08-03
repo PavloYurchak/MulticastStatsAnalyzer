@@ -24,12 +24,14 @@ namespace Server.Service
                 serverConfig.Decimals
                 );
 
-            if(_id == long.MaxValue)
+            Interlocked.Increment(ref _id);
+
+            if (_id == long.MaxValue)
                 _id = 1;
 
             var quote = new QuoteMessage
             {
-                Id = _id++,
+                Id = _id,
                 Value = value,
             };
 

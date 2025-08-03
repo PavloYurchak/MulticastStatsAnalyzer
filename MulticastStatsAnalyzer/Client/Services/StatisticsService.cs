@@ -18,20 +18,23 @@ namespace Client.Services
         {
             var message = await channelReader.ReadAsync(stoppingToken);
 
-            Interlocked.Increment(ref _received);
-
-            if (_lastId != 0 && message.Id != _lastId - 1)
+            if(message != null)
             {
-                long missed = message.Id - _lastId - 1;
-                if(missed > 0)
-                    Interlocked.Add(ref _lost, missed);
-            }
+                Interlocked.Increment(ref _received);
 
-            _lastId = message.Id;
+                if (_lastId != 0 && message.Id != _lastId - 1)
+                {
+                    long missed = message.Id - _lastId - 1;
+                    if (missed > 0)
+                        Interlocked.Add(ref _lost, missed);
+                }
 
-            lock (_values)
-            {
-                _values.Add(message.Value);
+                _lastId = message.Id;
+
+                lock (_values)
+                {
+                    _values.Add(message.Value);
+                }
             }
         }
 
@@ -46,10 +49,10 @@ namespace Client.Services
                 }
 
                 var values = _values.ToArray();
-                double mean = values.Average();
+                double average = values.Average();
 
                 double stddev = Math.Sqrt(values
-                    .Select(v => Math.Pow(v - mean, 2))
+                    .Select(v => Math.Pow(v - average, 2))
                     .Sum() / values.Length);
 
                 double median = values.OrderBy(v => v)
@@ -60,11 +63,11 @@ namespace Client.Services
                     .First()
                     .Key;
 
-                Console.WriteLine($"""
+                LogInformation($"""
                             Statistics:
                             - Received: {_received}
                             - Lost: {_lost}
-                            - Mean: {mean:F2}
+                            - Average: {average:F2}
                             - Standard Deviation: {stddev:F2}
                             - Median: {median:F2}
                             - Mode: {mode:F2}

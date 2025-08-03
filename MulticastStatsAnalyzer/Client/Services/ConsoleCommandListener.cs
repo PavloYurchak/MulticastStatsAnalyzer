@@ -10,7 +10,7 @@ namespace Client.Services
     {
         protected override async Task DoWorkAsync(CancellationToken stoppingToken)
         {
-            if(Console.KeyAvailable)
+            if (Console.KeyAvailable)
             {
                 var key = Console.ReadKey(true);
                 if ( key.Key == ConsoleKey.Enter)

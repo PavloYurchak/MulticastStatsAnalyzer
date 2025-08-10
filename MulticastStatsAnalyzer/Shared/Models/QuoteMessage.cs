@@ -1,8 +1,4 @@
 ﻿namespace Shared.Models
 {
-    public record QuoteMessage
-    {
-        public long Id { get; set; }
-        public double Value { get; set; }
-    }
+    public readonly record struct QuoteMessage(long Id, double Value);
 }

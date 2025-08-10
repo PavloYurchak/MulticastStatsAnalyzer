@@ -13,7 +13,7 @@ namespace Client.Services
             if (Console.KeyAvailable)
             {
                 var key = Console.ReadKey(true);
-                if ( key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.Enter)
                 {
                     statisticsService.PrintStatistics();
                 }

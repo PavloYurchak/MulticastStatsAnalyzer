@@ -12,7 +12,15 @@ Host.CreateDefaultBuilder(args)
         var config = ClientConfigLoader.Load("ClientConfig.xml");
         services.AddSingleton(config);
 
-        var channel = Channel.CreateUnbounded<QuoteMessage>();
+        //var channel = Channel.CreateUnbounded<QuoteMessage>();
+
+        var channel = Channel.CreateBounded<QuoteMessage>(
+        new BoundedChannelOptions(capacity: 1000)  // підбери під навантаження
+        {
+            SingleWriter = true,
+            SingleReader = true,
+            FullMode = BoundedChannelFullMode.DropOldest // або Wait
+        });
         services.AddSingleton(channel);
         services.AddSingleton(channel.Writer);
         services.AddSingleton(channel.Reader);

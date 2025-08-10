@@ -5,7 +5,6 @@ using Shared.Models;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
-using System.Text;
 using System.Threading.Channels;
 
 namespace Client.Services
@@ -25,23 +24,18 @@ namespace Client.Services
             udpClient.Client.ReceiveBufferSize = clientConfig.BufferSize;
             udpClient.Client.ReceiveTimeout = clientConfig.ReceiveTimeoutMs;
 
-            LogInformation("Listening for multicast messages on {Address}:{Port}");
+            LogInformation($"Listening for multicast messages on {clientConfig.MulticastAddress}:{clientConfig.Port}");
 
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
                     UdpReceiveResult result = await udpClient.ReceiveAsync(stoppingToken);
-                    string json = Encoding.UTF8.GetString(result.Buffer);
+                    var message = JsonSerializer.Deserialize<QuoteMessage>(result.Buffer);
 
-                    var message = JsonSerializer.Deserialize<QuoteMessage>(json);
-                    if (message != null)
+                    if(!channelWriter.TryWrite(message))
                     {
                         await channelWriter.WriteAsync(message, stoppingToken);
-                    }
-                    else
-                    {
-                        LogWarning($"Failed to deserialize message: {json}");
                     }
                 }
                 catch (OperationCanceledException)
